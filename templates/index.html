@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo_pagina|default('Bem-vindo!', true) }} - Meu Site Python{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="p-5 mb-4 bg-light-blue rounded-3 shadow-sm">
+        <div class="container-fluid py-3 text-center">
+            <h1 class="display-5 fw-bold section-title">Bem-vindo ao Site Informativo sobre Python!</h1>
+            <p class="fs-5 col-md-10 mx-auto">
+                Navegue pelas seções para aprender mais sobre os fundamentos da programação em Python.
+                Se você está começando sua jornada na programação ou buscando aprimorar suas habilidades, o Python é a escolha perfeita. Com uma sintaxe clara e intuitiva, Python torna o aprendizado divertido e a produtividade uma realidade.
+            </p>
+        </div>
+    </div>
+
+    <div class="row align-items-md-stretch">
+        <div class="col-md-6 mb-4">
+            <div class="h-100 p-5 text-bg-dark rounded-3 shadow custom-card" style="background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)) !important;">
+                <h2 class="text-white"><i class="bi bi-book-half me-2"></i>Aprenda os Fundamentos</h2>
+                <p class="text-white-50">Explore os conceitos básicos e avançados da linguagem Python, desde variáveis até tratamento de exceções.</p>
+                <a href="#fundamentos-links" class="btn btn-outline-light" type="button">Ver Tópicos de Fundamentos</a>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="h-100 p-5 bg-light border rounded-3 shadow custom-card">
+                <h2><i class="bi bi-chat-dots-fill me-2" style="color: var(--primary-blue);"></i>Interaja com a IA</h2>
+                <p>Tem alguma dúvida sobre Python? Pergunte à nossa Inteligência Artificial e obtenha respostas e explicações.</p>
+                <a href="{{ url_for('ia') }}" class="btn btn-outline-primary custom-card-button" type="button">Perguntar Agora</a>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5">
+
+    <div id="fundamentos-links">
+        <h2 class="section-title text-center mb-4">Tópicos de Fundamentos</h2>
+        <p class="text-center mb-4 lead">Este site é um projeto para demonstrar os fundamentos da programação em Python utilizando o framework Flask.</p>
+        <ul class="list-group list-group-flush fundamentos-list col-md-8 mx-auto">
+            <li class="list-group-item">
+                <a href="{{ url_for('fundamentos_selecao') }}"><i class="bi bi-diagram-2"></i>Estruturas de Seleção</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('fundamentos_repeticao') }}"><i class="bi bi-arrow-repeat"></i>Estruturas de Repetição</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('fundamentos_vetores_matrizes') }}"><i class="bi bi-grid-3x3-gap"></i>Vetores e Matrizes</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('fundamentos_funcoes') }}"><i class="bi bi-braces-asterisk"></i>Funções e Procedimentos</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('fundamentos_excecoes') }}"><i class="bi bi-shield-exclamation"></i>Tratamento de Exceções</a>
+            </li>
+        </ul>
+    </div>
+
+    <hr class="my-5">
+    
+    <div class="text-center">
+        <h2 class="section-title text-center mb-4">Por que Python?</h2>
+    </div>
+    <div class="accordion col-md-10 mx-auto shadow-sm" id="accordionPython">
+        <div class="accordion-item custom-card">
+            <h3 class="accordion-header" id="headingOne">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="color: var(--primary-blue);">
+                    ✨ Simples e Fácil de Aprender
+                </button>
+            </h3>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionPython">
+                <div class="accordion-body">
+                    Sua sintaxe se assemelha à linguagem humana, facilitando a leitura e escrita de código. Ideal para iniciantes!
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item custom-card mt-2">
+            <h3 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color: var(--primary-blue);">
+                    🚀 Incrivelmente Versátil
+                </button>
+            </h3>
+            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionPython">
+                <div class="accordion-body">
+                    Desde desenvolvimento web e ciência de dados até inteligência artificial e automação, Python está em toda parte.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item custom-card mt-2">
+            <h3 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="color: var(--primary-blue);">
+                    🌐 Comunidade Gigante e Ativa
+                </button>
+            </h3>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionPython">
+                <div class="accordion-body">
+                    Milhares de bibliotecas, frameworks e uma comunidade global pronta para te ajudar a solucionar qualquer desafio.
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item custom-card mt-2">
+            <h3 class="accordion-header" id="headingFour">
+                <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style="color: var(--primary-blue);">
+                    💼 Altamente Demandado no Mercado
+                </button>
+            </h3>
+            <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionPython">
+                <div class="accordion-body">
+                    Profissionais com conhecimento em Python são extremamente valorizados em diversas áreas da tecnologia.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="mt-5 text-center text-muted fst-italic">
+        Este projeto foi desenvolvido como parte da disciplina de Fundamentos de Programação.
+    </p>
+</div>
+{% endblock %}

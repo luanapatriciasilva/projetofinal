@@ -1,0 +1,259 @@
+{% extends "base.html" %}
+{% block content %}
+
+    {# Informação para o JS (se houver termos) #}
+    <div class="container py-5" data-has-terms="{{ 'true' if termos else 'false' }}">
+        <h1 class="text-center mb-5">📘 Dicionário de Termos - Python</h1>
+
+        <div class="col-12 mb-4">
+            <div class="card border-primary">
+                <div class="card-body">
+                    <h5 class="card-title">📄 Todos os termos cadastrados</h5>
+                    {% if termos %}
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Termo</th>
+                                        <th scope="col">Definição</th>
+                                        <th scope="col" class="text-center">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for termo, definicao in termos.items() %}
+                                        <tr>
+                                            <td><strong>{{ termo }}</strong></td>
+                                            <td>{{ definicao }}</td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-sm btn-warning me-2 edit-btn"
+                                                        data-bs-toggle="modal" data-bs-target="#alterTermModal"
+                                                        data-termo="{{ termo }}" data-definicao="{{ definicao }}">
+                                                    ✏️ Editar
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-danger delete-btn"
+                                                        data-bs-toggle="modal" data-bs-target="#deleteTermModal"
+                                                        data-termo="{{ termo }}">
+                                                    🗑️ Deletar
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">Nenhum termo cadastrado ainda.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="text-center mb-4">
+            <button class="btn btn-primary btn-lg" id="toggleFormManagementBtn">
+                Gerenciar Formulários de Termos
+            </button>
+        </div>
+
+        <div id="formManagementSection" style="display: none;"> {# <-- Este já tinha display: none #}
+            <ul class="nav nav-tabs mb-3" id="dicionarioTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="add-tab" data-bs-toggle="tab" data-bs-target="#add" type="button" role="tab" aria-controls="add" aria-selected="true">➕ Adicionar Termo</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="alter-tab" data-bs-toggle="tab" data-bs-target="#alter" type="button" role="tab" aria-controls="alter" aria-selected="false">✏️ Alterar Termo</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="delete-tab" data-bs-toggle="tab" data-bs-target="#delete" type="button" role="tab" aria-controls="delete" aria-selected="false">🗑️ Deletar Termo</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="dicionarioTabContent">
+                <div class="tab-pane fade show active" id="add" role="tabpanel" aria-labelledby="add-tab">
+                    <div class="card border-success">
+                        <div class="card-body">
+                            <h5 class="card-title">Adicionar Novo Termo</h5>
+                            <form method="POST" action="{{ url_for('adicionar') }}">
+                                <div class="mb-3">
+                                    <label for="termo_add" class="form-label">Termo:</label>
+                                    <input type="text" class="form-control" id="termo_add" name="termo" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="definicao_add" class="form-label">Definição:</label>
+                                    <textarea class="form-control" id="definicao_add" name="definicao" rows="3" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success mt-3">Adicionar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="alter" role="tabpanel" aria-labelledby="alter-tab">
+                    <div class="card border-warning">
+                        <div class="card-body">
+                            <h5 class="card-title">Alterar Definição de Termo</h5>
+                            <form method="POST" action="{{ url_for('alterar') }}">
+                                <div class="mb-3">
+                                    <label for="termo_alter_select" class="form-label">Termo a Alterar:</label>
+                                    <select class="form-select" id="termo_alter_select" name="termo" required>
+                                        {% for termo_chave, definicao_valor in termos.items() %}
+                                            <option value="{{ termo_chave }}">{{ termo_chave }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    {% if not termos %}
+                                        <small class="text-muted">Nenhum termo disponível para alterar.</small>
+                                    {% endif %}
+                                </div>
+                                <div class="mb-3">
+                                    <label for="nova_definicao_alter" class="form-label">Nova Definição:</label>
+                                    <textarea class="form-control" id="nova_definicao_alter" name="definicao" rows="3" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-warning mt-3">Alterar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="delete" role="tabpanel" aria-labelledby="delete-tab">
+                    <div class="card border-danger">
+                        <div class="card-body">
+                            <h5 class="card-title">Deletar Termo</h5>
+                            <form method="POST" action="{{ url_for('deletar') }}">
+                                <div class="mb-3">
+                                    <label for="termo_delete_select" class="form-label">Selecione o termo:</label>
+                                    <select class="form-select" id="termo_delete_select" name="termo" required>
+                                        {% for termo_chave, definicao_valor in termos.items() %}
+                                            <option value="{{ termo_chave }}">{{ termo_chave }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    {% if not termos %}
+                                        <small class="text-muted">Nenhum termo disponível para deletar.</small>
+                                    {% endif %}
+                                </div>
+                                <button type="submit" class="btn btn-danger mt-3">Deletar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="alterTermModal" tabindex="-1" aria-labelledby="alterTermModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="alterTermModalLabel">Alterar Definição de Termo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ url_for('alterar') }}">
+                        <div class="mb-3">
+                            <label for="termo_alter_modal_input" class="form-label">Termo:</label>
+                            {# Campo readonly para o termo selecionado na tabela #}
+                            <input type="text" class="form-control" id="termo_alter_modal_input" name="termo" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nova_definicao_modal_alter" class="form-label">Nova Definição:</label>
+                            <textarea class="form-control" id="nova_definicao_modal_alter" name="definicao" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-warning mt-3">Alterar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteTermModal" tabindex="-1" aria-labelledby="deleteTermModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteTermModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza que deseja deletar o termo: <strong id="termoToDeleteModal"></strong>?</p>
+                    <form method="POST" action="{{ url_for('deletar') }}">
+                        <input type="hidden" id="termo_delete_modal_input" name="termo">
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-danger">Deletar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/dicionario.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleFormManagementBtn = document.getElementById('toggleFormManagementBtn');
+            const formManagementSection = document.getElementById('formManagementSection');
+            // Não precisamos do container para a visibilidade do botão agora
+            // const container = document.querySelector('.container');
+            // const hasTerms = container.getAttribute('data-has-terms') === 'true';
+
+            // A lógica para exibir o botão "Ver/Gerenciar Termos Existentes" foi removida
+            // porque a tabela é sempre visível agora.
+
+            // Lógica para alternar a visibilidade da seção de formulários
+            if (toggleFormManagementBtn) {
+                toggleFormManagementBtn.addEventListener('click', function() {
+                    if (formManagementSection.style.display === 'none') {
+                        formManagementSection.style.display = 'block'; // Mostra a seção
+                        toggleFormManagementBtn.textContent = 'Ocultar Formulários de Termos';
+                        toggleFormManagementBtn.classList.remove('btn-primary');
+                        toggleFormManagementBtn.classList.add('btn-secondary');
+                        // Ativa a primeira aba (Adicionar) ao mostrar a seção
+                        new bootstrap.Tab(document.getElementById('add-tab')).show();
+                    } else {
+                        formManagementSection.style.display = 'none'; // Oculta a seção
+                        toggleFormManagementBtn.textContent = 'Gerenciar Formulários de Termos';
+                        toggleFormManagementBtn.classList.remove('btn-secondary');
+                        toggleFormManagementBtn.classList.add('btn-primary');
+                    }
+                });
+            }
+
+            // Lógica para preencher o modal de Alterar (acionado pela tabela)
+            const alterTermModal = document.getElementById('alterTermModal');
+            if (alterTermModal) {
+                alterTermModal.addEventListener('show.bs.modal', event => {
+                    const button = event.relatedTarget;
+                    const termo = button.getAttribute('data-termo');
+                    const definicao = button.getAttribute('data-definicao');
+
+                    const modalTermInput = alterTermModal.querySelector('#termo_alter_modal_input');
+                    const modalDefinicaoInput = alterTermModal.querySelector('#nova_definicao_modal_alter');
+
+                    if (modalTermInput) modalTermInput.value = termo;
+                    if (modalDefinicaoInput) modalDefinicaoInput.value = definicao;
+                });
+            }
+
+            // Lógica para preencher o modal de Deletar (acionado pela tabela)
+            const deleteTermModal = document.getElementById('deleteTermModal');
+            if (deleteTermModal) {
+                deleteTermModal.addEventListener('show.bs.modal', event => {
+                    const button = event.relatedTarget;
+                    const termo = button.getAttribute('data-termo');
+
+                    const termoToDeleteSpan = deleteTermModal.querySelector('#termoToDeleteModal');
+                    const termoDeleteInput = deleteTermModal.querySelector('#termo_delete_modal_input');
+
+                    if (termoToDeleteSpan) termoToDeleteSpan.textContent = termo;
+                    if (termoDeleteInput) termoDeleteInput.value = termo;
+                });
+            }
+        });
+    </script>
+{% endblock %}
+
+{% block head_extra %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dicionario.css') }}">
+{% endblock %}

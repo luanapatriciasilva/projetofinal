@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}Funções e Procedimentos - Fundamentos de Python{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <h1 class="section-title text-center mb-5">Funções e Procedimentos em Python</h1>
+
+            <div class="bg-light-blue p-4 p-md-5 mb-5 shadow-sm rounded">
+                <p class="lead">
+                    Funções são blocos de código reutilizáveis que realizam uma tarefa específica. Elas são um dos pilares da programação modular,
+                    ajudando a organizar o código, torná-lo mais legível, evitar repetição e facilitar a manutenção.
+                </p>
+                <p>
+                    Em Python, um "procedimento" é essencialmente uma função que não retorna um valor explicitamente (ou retorna <code>None</code> por padrão).
+                    A definição de ambos utiliza a palavra-chave <code>def</code>.
+                </p>
+            </div>
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-gear-fill me-2"></i>Definindo uma Função</h2>
+                <p>
+                    Para definir uma função em Python, usamos a palavra-chave <code>def</code>, seguida pelo nome da função, parênteses <code>()</code> que podem conter parâmetros, e dois pontos <code>:</code>.
+                    O corpo da função é indentado.
+                </p>
+
+                <h5 class="mt-4">Sintaxe Básica:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>def nome_da_funcao(parametro1, parametro2, ...):
+    """
+    Esta é uma docstring (opcional, mas recomendada).
+    Ela explica o que a função faz.
+    """
+    # Corpo da função (código a ser executado)
+    # ...
+    return valor_de_retorno  # Opcional</code></pre>
+
+                <h5 class="mt-4">Exemplo de Função Simples (Procedimento):</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>def saudacao(nome):
+    """Exibe uma saudação para o nome fornecido."""
+    print(f"Olá, {nome}! Seja bem-vindo(a).")
+
+# Chamando a função
+saudacao("Maria")
+saudacao("João")</code></pre>
+                <p class="mt-2">Saída:</p>
+                <pre class="bg-secondary bg-opacity-10 p-2 rounded"><code>Olá, Maria! Seja bem-vindo(a).
+Olá, João! Seja bem-vindo(a).</code></pre>
+
+                <h5 class="mt-4">Exemplo de Função que Retorna um Valor:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>def somar(a, b):
+    """Retorna a soma de dois números."""
+    resultado = a + b
+    return resultado
+
+# Chamando a função e armazenando o resultado
+soma_numeros = somar(5, 3)
+print(f"A soma é: {soma_numeros}")  # Saída: A soma é: 8
+print(f"Outra soma: {somar(10, 20)}") # Saída: Outra soma: 30</code></pre>
+                <p class="mt-3">Se uma função não tiver uma instrução <code>return</code> explícita, ou tiver um <code>return</code> sem um valor, ela retorna <code>None</code> por padrão.</p>
+            </article>
+
+            <hr class="my-4">
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-sliders me-2"></i>Parâmetros e Argumentos</h2>
+                <p>
+                    Parâmetros são as variáveis listadas dentro dos parênteses na definição da função.
+                    Argumentos são os valores passados para a função quando ela é chamada.
+                </p>
+
+                <h5 class="mt-4">Parâmetros Posicionais:</h5>
+                <p>Os argumentos são passados na ordem em que os parâmetros são definidos.</p>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>def descrever_pet(tipo_animal, nome_animal):
+    print(f"Eu tenho um {tipo_animal}.")
+    print(f"O nome dele é {nome_animal}.")
+
+descrever_pet("cachorro", "Rex")</code></pre>
+
+                <h5 class="mt-4">Argumentos Nomeados (Keyword Arguments):</h5>
+                <p>Você pode especificar para qual parâmetro cada argumento se destina, permitindo passá-los fora de ordem.</p>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>descrever_pet(nome_animal="Totó", tipo_animal="gato")</code></pre>
+
+                <h5 class="mt-4">Valores Padrão para Parâmetros:</h5>
+                <p>Você pode definir um valor padrão para um parâmetro. Se um argumento para esse parâmetro não for fornecido na chamada da função, o valor padrão será usado.</p>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>def potencia(base, expoente=2): # expoente tem valor padrão 2
+    return base ** expoente
+
+print(potencia(5))      # Usa expoente=2. Saída: 25
+print(potencia(5, 3))   # Usa expoente=3. Saída: 125</code></pre>
+                <div class="alert alert-secondary shadow-sm">Os parâmetros com valores padrão devem vir após os parâmetros sem valores padrão na definição da função.</div>
+
+                <h5 class="mt-4">Argumentos Arbitrários (`*args` e `**kwargs`):</h5>
+                <p>
+                    Às vezes, você não sabe de antemão quantos argumentos uma função precisará receber.
+                </p>
+                <ul>
+                    <li><code>*args</code>: Permite passar um número variável de argumentos posicionais, que são agrupados em uma tupla.</li>
+                    <li><code>**kwargs</code>: Permite passar um número variável de argumentos nomeados, que são agrupados em um dicionário.</li>
+                </ul>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>def listar_itens(*args):
+    print("Itens recebidos (args):")
+    for item in args:
+        print(f"- {item}")
+
+listar_itens("maçã", "banana", "laranja")
+
+def exibir_info_pessoa(**kwargs):
+    print("\nInformações da pessoa (kwargs):")
+    for chave, valor in kwargs.items():
+        print(f"- {chave.capitalize()}: {valor}")
+
+exibir_info_pessoa(nome="Carlos", idade=30, cidade="Recife")</code></pre>
+            </article>
+
+            <hr class="my-4">
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-quote me-2"></i>Docstrings (Strings de Documentação)</h2>
+                <p>
+                    A primeira instrução em uma função pode ser uma string literal; esta string se torna o atributo <code>__doc__</code> da função e é usada para documentá-la.
+                    É uma boa prática sempre incluir docstrings claras. Elas geralmente são escritas entre aspas triplas <code>"""Docstring aqui"""</code>.
+                </p>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>def calcular_area_retangulo(largura, altura):
+    """
+    Calcula a área de um retângulo.
+
+    Args:
+        largura (float): A largura do retângulo.
+        altura (float): A altura do retângulo.
+
+    Returns:
+        float: A área calculada do retângulo.
+    """
+    if largura < 0 or altura < 0:
+        return "Dimensões inválidas" # Exemplo de tratamento simples de erro
+    return largura * altura
+
+print(calcular_area_retangulo.__doc__)
+print(f"Área: {calcular_area_retangulo(10, 5)}")</code></pre>
+            </article>
+
+            <hr class="my-4">
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-diagram-3-fill me-2"></i>Escopo de Variáveis (Local vs. Global)</h2>
+                <p>
+                    O escopo de uma variável se refere à parte do programa onde ela é reconhecida e pode ser acessada.
+                </p>
+                <ul>
+                    <li><strong>Variáveis Locais:</strong> São definidas dentro de uma função e só podem ser usadas dentro dessa função. Elas são criadas quando a função é chamada e destruídas quando a função termina.</li>
+                    <li><strong>Variáveis Globais:</strong> São definidas fora de todas as funções e podem ser acessadas (lidas) de qualquer lugar do código, inclusive dentro de funções.</li>
+                </ul>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>variavel_global = "Eu sou global"
+
+def minha_funcao():
+    variavel_local = "Eu sou local"
+    print(variavel_local)
+    print(f"Dentro da função, acessando: {variavel_global}")
+
+minha_funcao()
+print(f"Fora da função, acessando: {variavel_global}")
+# print(variavel_local)  # Isto causaria um erro (NameError), pois variavel_local não é definida aqui</code></pre>
+                <p class="mt-3">
+                    Para modificar uma variável global dentro de uma função, você precisaria usar a palavra-chave <code>global</code>, mas isso geralmente é desencorajado, pois pode tornar o código mais difícil de entender e depurar. É preferível que as funções recebam dados como parâmetros e retornem resultados.
+                </p>
+            </article>
+
+            <div class="alert alert-info mt-5 shadow-sm" role="alert">
+                <h4 class="alert-heading"><i class="bi bi-lightbulb-fill"></i> Princípios de Boas Funções</h4>
+                <ul>
+                    <li><strong>Pequenas e Focadas:</strong> Idealmente, uma função deve fazer uma única coisa bem feita.</li>
+                    <li><strong>Nomes Descritivos:</strong> O nome da função deve indicar claramente o que ela faz.</li>
+                    <li><strong>Reutilizáveis:</strong> Escreva funções de forma que possam ser usadas em diferentes partes do seu programa ou em outros projetos.</li>
+                    <li><strong>Docstrings Claras:</strong> Documente suas funções para que outros (e você no futuro) possam entender como usá-las.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

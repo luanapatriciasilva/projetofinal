@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block title %}Tratamento de Exceções - Fundamentos de Python{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <h1 class="section-title text-center mb-5">Tratamento de Exceções em Python</h1>
+
+            <div class="bg-light-blue p-4 p-md-5 mb-5 shadow-sm rounded">
+                <p class="lead">
+                    Mesmo com o código mais cuidadoso, erros podem acontecer durante a execução de um programa. Esses erros em tempo de execução são chamados de **exceções**.
+                    O tratamento de exceções é o processo de responder à ocorrência de exceções, permitindo que o programa lide com o problema de forma controlada,
+                    em vez de simplesmente terminar abruptamente.
+                </p>
+                <p>
+                    Python usa as palavras-chave try, except, else, e finally para gerenciar exceções.
+                </p>
+            </div>
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-shield-shaded me-2"></i>O Bloco try e except</h2>
+                <p>
+                    A forma mais básica de tratamento de exceções é o bloco try-except.
+                    O código que pode potencialmente levantar uma exceção é colocado dentro do bloco try.
+                    Se uma exceção ocorrer dentro do bloco try, o Python procura por um bloco except correspondente e o executa.
+                </p>
+
+                <h5 class="mt-4">Sintaxe Básica:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>try:
+    # Código que pode causar uma exceção
+    resultado = 10 / 0  # Isto causará uma ZeroDivisionError
+except ZeroDivisionError:
+    # Código a ser executado se ZeroDivisionError ocorrer
+    print("Erro: Divisão por zero não é permitida!")
+
+print("Continuando a execução do programa...")</code></pre>
+                <p class="mt-2">Neste exemplo, em vez do programa parar, a mensagem de erro customizada é impressa e o programa continua.</p>
+
+                <h5 class="mt-4">Capturando Diferentes Tipos de Exceções:</h5>
+                <p>Você pode ter múltiplos blocos except para lidar com diferentes tipos de exceções.</p>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>try:
+    numero = int(input("Digite um número: "))
+    resultado = 100 / numero
+    print(f"O resultado é: {resultado}")
+except ValueError:
+    print("Entrada inválida! Por favor, digite um número inteiro.")
+except ZeroDivisionError:
+    print("Erro: Não é possível dividir por zero.")
+except Exception as e: # Captura outras exceções genéricas
+    print(f"Ocorreu um erro inesperado: {e}")</code></pre>
+                <p class="mt-3">
+                    É uma boa prática capturar exceções específicas primeiro e, opcionalmente, uma mais genérica (como Exception) por último para pegar qualquer erro não previsto.
+                    Usar as e permite acessar o objeto da exceção, que pode conter mais informações sobre o erro.
+                </p>
+
+                <h5 class="mt-4">Capturando Múltiplas Exceções em um Único Bloco:</h5>
+                <p>Se diferentes tipos de exceção devem ser tratados da mesma forma, você pode agrupá-los em uma tupla:</p>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>try:
+    # Algum código...
+    valor = int("abc") # ValueError
+    # ou
+    # lista = []
+    # print(lista[0]) # IndexError
+except (ValueError, TypeError, IndexError) as e:
+    print(f"Ocorreu um erro de valor, tipo ou índice: {e}")</code></pre>
+                
+                <h5 class="mt-4">Um Bloco except Genérico (Use com Cuidado):</h5>
+                <p>Um bloco except: sem especificar o tipo de exceção capturará todas as exceções. No entanto, isso geralmente não é recomendado porque pode esconder erros que você não previu e dificultar a depuração.</p>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>try:
+    # Código...
+    x = y / 0 # Exemplo
+except: # Captura QUALQUER exceção
+    print("Algo deu muito errado!")</code></pre>
+            </article>
+
+            <hr class="my-4">
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-journal-check me-2"></i>A Cláusula else</h2>
+                <p>
+                    Opcionalmente, você pode adicionar uma cláusula else a um bloco try-except.
+                    O código dentro do bloco else é executado <strong>somente se nenhuma exceção ocorrer</strong> dentro do bloco try.
+                </p>
+                <h5 class="mt-4">Sintaxe:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>try:
+    # Código que pode levantar uma exceção
+    numerador = int(input("Digite o numerador: "))
+    denominador = int(input("Digite o denominador: "))
+    resultado = numerador / denominador
+except ValueError:
+    print("Por favor, insira apenas números.")
+except ZeroDivisionError:
+    print("O denominador não pode ser zero.")
+else:
+    # Executado se NENHUMA exceção ocorreu no bloco try
+    print(f"A divisão foi bem-sucedida! Resultado: {resultado}")</code></pre>
+            </article>
+
+            <hr class="my-4">
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-journal-bookmark-fill me-2"></i>A Cláusula finally</h2>
+                <p>
+                    A cláusula finally é também opcional e, se presente, seu bloco de código será <strong>sempre executado</strong>, independentemente de ter ocorrido uma exceção ou não,
+                    e mesmo que um return, break ou continue seja encontrado no bloco try.
+                    É comumente usada para tarefas de "limpeza", como fechar arquivos ou conexões de rede.
+                </p>
+                <h5 class="mt-4">Sintaxe:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>try:
+    arquivo = open("meu_arquivo.txt", "r")
+    # Processa o arquivo...
+    conteudo = arquivo.read()
+    print(conteudo)
+    # Suponha que um erro possa ocorrer aqui
+    # resultado = 10 / 0 
+except FileNotFoundError:
+    print("Erro: Arquivo não encontrado.")
+except Exception as e:
+    print(f"Ocorreu um erro: {e}")
+finally:
+    # Este bloco é SEMPRE executado
+    print("Fechando o arquivo (se estiver aberto).")
+    if 'arquivo' in locals() and not arquivo.closed:
+        arquivo.close()
+        print("Arquivo fechado.")
+    else:
+        print("Arquivo não precisou ser fechado ou não foi aberto.")</code></pre>
+            </article>
+
+            <hr class="my-4">
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-upload me-2"></i>Levantando Exceções (raise)</h2>
+                <p>
+                    Você também pode forçar a ocorrência de uma exceção usando a palavra-chave raise.
+                    Isso é útil quando você detecta uma condição de erro no seu código e quer sinalizar que algo inesperado aconteceu.
+                </p>
+                <h5 class="mt-4">Sintaxe:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code># raise NomeDaExcecao("Mensagem opcional descrevendo o erro")
+
+def calcular_idade_media(soma_idades, numero_pessoas):
+    if numero_pessoas <= 0:
+        raise ValueError("Número de pessoas deve ser positivo e maior que zero.")
+    return soma_idades / numero_pessoas
+
+try:
+    media = calcular_idade_media(100, 0)
+    print(f"Idade média: {media}")
+except ValueError as e:
+    print(f"Erro ao calcular: {e}")</code></pre>
+            </article>
+
+            <hr class="my-4">
+            
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-list-stars me-2"></i>Exceções Comuns em Python</h2>
+                <p>Algumas das exceções embutidas mais comuns que você pode encontrar (e tratar) incluem:</p>
+                <ul class="list-group col-md-8">
+                    <li class="list-group-item">SyntaxError: Erro na sintaxe do código Python.</li>
+                    <li class="list-group-item">IndentationError: Erro relacionado à indentação incorreta.</li>
+                    <li class="list-group-item">NameError: Tentativa de usar uma variável ou nome que não foi definido.</li>
+                    <li class="list-group-item">TypeError: Operação ou função aplicada a um objeto de tipo inadequado.</li>
+                    <li class="list-group-item">ValueError: Função recebe um argumento com tipo correto, mas valor inadequado.</li>
+                    <li class="list-group-item">IndexError: Índice fora da faixa para uma sequência (lista, string, tupla).</li>
+                    <li class="list-group-item">KeyError: Chave não encontrada em um dicionário.</li>
+                    <li class="list-group-item">ZeroDivisionError: Tentativa de divisão por zero.</li>
+                    <li class="list-group-item">FileNotFoundError: Tentativa de abrir um arquivo que não existe.</li>
+                    <li class="list-group-item">IOError: Erro de entrada/saída, como problemas ao ler ou escrever arquivos.</li>
+                    <li class="list-group-item">AttributeError: Tentativa de acessar um atributo ou método que não existe em um objeto.</li>
+                    <li class="list-group-item">ImportError: Falha ao tentar importar um módulo.</li>
+                </ul>
+            </article>
+
+            <div class="alert alert-info mt-5 shadow-sm" role="alert">
+                <h4 class="alert-heading"><i class="bi bi-lightbulb-fill"></i> Boas Práticas no Tratamento de Exceções</h4>
+                <ul>
+                    <li><strong>Seja Específico:</strong> Capture exceções específicas em vez de usar um except: genérico sempre que possível.</li>
+                    <li><strong>Mensagens Claras:</strong> Forneça mensagens de erro úteis para o usuário ou para depuração.</li>
+                    <li><strong>Não Suprima Erros Silenciosamente:</strong> Evite blocos except: pass a menos que você tenha uma razão muito boa e saiba o que está fazendo.</li>
+                    <li><strong>Limpeza com `finally`:</strong> Use a cláusula finally para garantir que recursos importantes (como arquivos ou conexões) sejam liberados.</li>
+                    <li><strong>Evite Lógica Excessiva no `try`:</strong> Coloque apenas o código que realmente pode levantar a exceção que você quer tratar dentro do bloco try.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

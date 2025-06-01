@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}Estruturas de Repetição - Fundamentos de Python{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <h1 class="section-title text-center mb-5">Estruturas de Repetição em Python</h1>
+
+            <div class="bg-light-blue p-4 p-md-5 mb-5 shadow-sm rounded">
+                <p class="lead">
+                    No mundo da programação, muitas vezes precisamos executar a mesma tarefa ou um conjunto de instruções várias vezes.
+                    As **estruturas de repetição**, também conhecidas como loops, são ferramentas poderosas que nos permitem automatizar essas tarefas repetitivas,
+                    tornando nosso código mais eficiente e conciso.
+                </p>
+                <p>Python oferece principalmente duas estruturas de repetição: o loop for e o loop while.</p>
+            </div>
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-arrow-repeat me-2"></i>O Loop for</h2>
+                <p>
+                    O loop for em Python é usado para iterar sobre uma sequência (como uma lista, uma tupla, um dicionário, um conjunto ou uma string) ou outros objetos iteráveis.
+                    A cada iteração, a variável de controle do loop assume o valor do próximo item da sequência.
+                </p>
+
+                <h5 class="mt-4">Sintaxe:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>for item in sequencia:
+    # Bloco de código a ser executado para cada item
+    # Este bloco DEVE ser indentado
+    print(item)</code></pre>
+
+                <h5 class="mt-4">Iterando sobre uma Lista:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>frutas = ["maçã", "banana", "cereja"]
+for fruta in frutas:
+    print(f"Eu gosto de {fruta}")</code></pre>
+                <p class="mt-2">Saída:</p>
+                <pre class="bg-secondary bg-opacity-10 p-2 rounded"><code>Eu gosto de maçã
+Eu gosto de banana
+Eu gosto de cereja</code></pre>
+
+                <h5 class="mt-4">Iterando sobre uma String:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>palavra = "Python"
+for letra in palavra:
+    print(letra)</code></pre>
+                <p class="mt-2">Saída:</p>
+                <pre class="bg-secondary bg-opacity-10 p-2 rounded"><code>P
+y
+t
+h
+o
+n</code></pre>
+
+                <h5 class="mt-4">A Função range()</h5>
+                <p>
+                    Frequentemente, você desejará executar um loop um número específico de vezes. A função range() é perfeita para isso.
+                    Ela gera uma sequência de números.
+                </p>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code># Imprime números de 0 a 4
+for i in range(5):
+    print(i)
+
+# Imprime números de 2 a 5 (o 6 não é incluído)
+for j in range(2, 6):
+    print(j)
+
+# Imprime números de 1 a 10, pulando de 2 em 2
+for k in range(1, 11, 2):
+    print(k)</code></pre>
+            </article>
+
+            <hr class="my-4">
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-infinity me-2"></i>O Loop while</h2>
+                <p>
+                    O loop while executa um bloco de código enquanto uma determinada condição booleana for verdadeira (True).
+                    É importante garantir que a condição eventualmente se torne falsa, caso contrário, você criará um loop infinito.
+                </p>
+
+                <h5 class="mt-4">Sintaxe:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>while condicao:
+    # Bloco de código a ser executado enquanto a condicao for True
+    # Este bloco DEVE ser indentado
+    print("A condição ainda é verdadeira")
+    # Geralmente, algo dentro do loop modifica a condição</code></pre>
+
+                <h5 class="mt-4">Exemplo Prático:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>contador = 0
+while contador < 5:
+    print(f"Contador é {contador}")
+    contador += 1  # Incrementa o contador (essencial para evitar loop infinito)
+
+print("Loop while finalizado!")</code></pre>
+                <p class="mt-2">Saída:</p>
+                <pre class="bg-secondary bg-opacity-10 p-2 rounded"><code>Contador é 0
+Contador é 1
+Contador é 2
+Contador é 3
+Contador é 4
+Loop while finalizado!</code></pre>
+                <div class="alert alert-warning mt-3 shadow-sm">
+                    <h5 class="alert-heading"><i class="bi bi-exclamation-triangle-fill"></i> Cuidado com Loops Infinitos!</h5>
+                    Se a condição de um loop while nunca se tornar falsa, o loop continuará executando para sempre.
+                    Certifique-se de que alguma variável que afeta a condição seja modificada dentro do loop.
+                </div>
+            </article>
+
+            <hr class="my-4">
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-fast-forward-fill me-2"></i>Controles de Loop: break e continue</h2>
+                <p>
+                    Python oferece duas instruções para controlar o fluxo de execução dentro dos loops: break e continue.
+                </p>
+
+                <h5 class="mt-4">A Instrução break</h5>
+                <p>
+                    A instrução break termina o loop atual prematuramente, independentemente da condição do loop (para while) ou dos itens restantes na sequência (para for).
+                    A execução continua na primeira instrução após o bloco do loop.
+                </p>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>numeros = [1, 2, 3, 4, 5, 6, 7]
+for numero in numeros:
+    if numero == 5:
+        print("Encontrei o 5, parando o loop!")
+        break  # Sai do loop
+    print(numero)
+print("Fora do loop")</code></pre>
+                 <p class="mt-2">Saída:</p>
+                <pre class="bg-secondary bg-opacity-10 p-2 rounded"><code>1
+2
+3
+4
+Encontrei o 5, parando o loop!
+Fora do loop</code></pre>
+
+                <h5 class="mt-4">A Instrução continue</h5>
+                <p>
+                    A instrução continue interrompe a iteração atual do loop e salta para o início da próxima iteração.
+                    O código restante no bloco do loop para a iteração atual não é executado.
+                </p>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>numeros = [1, 2, 3, 4, 5]
+for numero in numeros:
+    if numero % 2 == 0:  # Se o número for par
+        print(f"Pulando o número par: {numero}")
+        continue  # Pula para a próxima iteração
+    print(f"Processando o número ímpar: {numero}")</code></pre>
+                <p class="mt-2">Saída:</p>
+                <pre class="bg-secondary bg-opacity-10 p-2 rounded"><code>Processando o número ímpar: 1
+Pulando o número par: 2
+Processando o número ímpar: 3
+Pulando o número par: 4
+Processando o número ímpar: 5</code></pre>
+            </article>
+
+            <hr class="my-4">
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-journal-else me-2"></i>A Cláusula else em Loops</h2>
+                <p>
+                    Tanto os loops for quanto os loops while em Python podem ter uma cláusula else opcional.
+                    O bloco de código do else é executado quando o loop termina sua execução normalmente (ou seja, não foi interrompido por uma instrução break).
+                </p>
+
+                <h5 class="mt-4">else com Loop for:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>nomes = ["Ana", "Carlos", "Beatriz"]
+for nome in nomes:
+    print(nome)
+else:
+    print("Todos os nomes foram listados sem interrupção.")
+
+# Exemplo com break
+for nome in nomes:
+    if nome == "Carlos":
+        print("Encontrei Carlos, parando.")
+        break
+    print(nome)
+else:
+    print("Este else não será executado porque o loop foi interrompido.")</code></pre>
+
+                <h5 class="mt-4">else com Loop while:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>tentativas = 0
+while tentativas < 3:
+    senha = input("Digite a senha: ")
+    if senha == "secreto":
+        print("Acesso concedido!")
+        break
+    tentativas += 1
+else:
+    print("Número máximo de tentativas excedido. Acesso negado.")</code></pre>
+                <p class="mt-3">Neste exemplo do while, se o usuário acertar a senha, o break é executado e o else não. Se errar 3 vezes, o loop termina normalmente e o else é executado.</p>
+            </article>
+
+            <div class="alert alert-info mt-5 shadow-sm" role="alert">
+                <h4 class="alert-heading"><i class="bi bi-lightbulb-fill"></i> Dica de Mestre!</h4>
+                <p>Escolha o tipo de loop mais adequado para sua tarefa:
+                    <ul>
+                        <li>Use for quando você sabe quantas vezes quer iterar ou quando quer iterar sobre os itens de uma sequência.</li>
+                        <li>Use while quando você quer repetir um bloco de código enquanto uma condição específica for verdadeira, e o número de iterações não é conhecido de antemão.</li>
+                    </ul>
+                </p>
+                <hr>
+                <p class="mb-0">A indentação continua sendo crucial para definir os blocos de código dentro dos loops e das cláusulas else.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

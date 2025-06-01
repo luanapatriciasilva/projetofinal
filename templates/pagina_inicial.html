@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Bem-vindo! - Meu Site Python{% endblock %}
+
+{% block content %}
+<h1>Bem-vindo ao Site Informativo sobre Python!</h1>
+<p>Este site é um projeto para demonstrar os fundamentos da programação em Python utilizando o framework Flask.</p>
+<p>Navegue pelas seções para aprender mais sobre:</p>
+<ul>
+    <li><a href="{{ url_for('fundamentos_selecao') }}">Estruturas de Seleção</a></li>
+    <li><a href="{{ url_for('fundamentos_repeticao') }}">Estruturas de Repetição</a></li>
+    <li><a href="{{ url_for('fundamentos_vetores_matrizes') }}">Vetores e Matrizes</a></li>
+    <li><a href="{{ url_for('fundamentos_funcoes') }}">Funções e Procedimentos</a></li>
+    <li><a href="{{ url_for('fundamentos_excecoes') }}">Tratamento de Exceções</a></li>
+    <li><a href="{{ url_for('fundamentos_pergunte_ia') }}">Tratamento de Exceções</a></li>
+</ul>
+<p>Visite também a página da <a href="{{ url_for('pagina_equipe') }}">nossa equipe</a>.</p>
+{% endblock %}
+

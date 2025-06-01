@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Perguntas para IA - Meu Site Python{% endblock %} {# Opcional: define um título específico para a aba do navegador #}
+
+{% block content %}
+    <h2>Perguntas para a Inteligência Artificial</h2>
+
+    <form method="POST">
+        <label for="user_input">Digite sua pergunta:</label><br>
+        <textarea id="user_input" name="user_input" rows="5" cols="50" placeholder="Faça uma pergunta ao Gemini...">{{ user_input }}</textarea><br>
+        <button type="submit">Enviar para IA</button>
+    </form>
+
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    {% if ai_response %}
+        <h3>Resposta da IA:</h3>
+        <div class="ai-response-box">
+            <p>{{ ai_response | safe }}</p> {# Usamos 'safe' caso a resposta da IA contenha HTML básico #}
+        </div>
+    {% endif %}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const textarea = document.getElementById("user_input");
+            const form = textarea.closest("form"); // Pega o formulário pai do textarea
+
+            textarea.addEventListener("keydown", function (event) {
+                // Se a tecla Enter for pressionada E a tecla Shift NÃO estiver pressionada
+                if (event.key === "Enter" && !event.shiftKey) {
+                    event.preventDefault(); // Impede a quebra de linha padrão do Enter
+                    form.submit(); // Envia o formulário
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+{# O bloco 'scripts' não é necessário no seu base.html, então podemos removê-lo aqui se não tiver outra utilidade.
+   Ou, se você quisesse colocar o script JS em um arquivo separado, usaria o block 'head_extra'
+   ou criaria um novo block no footer do base.html. Por simplicidade, deixei o script direto no content. #}
+{# {% block scripts %}{% endblock %} #}

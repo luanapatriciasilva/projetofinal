@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %} Equipe - Meu Site Python{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="section-title text-center mb-5">Conheça Nossa Equipe</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4 mb-4 d-flex align-items-stretch"> {# d-flex e align-items-stretch para cards de mesma altura #}
+            <div class="card custom-card text-center h-100 w-100"> {# h-100 para ocupar altura do d-flex, w-100 opcional #}
+                <img src="{{ url_for('static', filename='images/fotoLuana.jpg') }}" class="card-img-top membros-equipe-img mx-auto" alt="Foto da Luana">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title mt-3">Luana Patricia Gomes da Silva</h5>
+                    <p class="card-text text-muted">Estudante do curso de Sistemas para Internet</p>
+                    <p class="card-text flex-grow-1"><em>Projeto final da disciplina de Introdução a Programação, 1° perido - Uniesp.</em></p>
+                    <a href="https://www.instagram.com/luanapatriciajp/" target="_blank" class="btn btn-outline-primary btn-sm mt-auto custom-card-button">
+                        <i class="bi bi-instagram"></i> Instagram
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        </div>
+</div>
+{% endblock %}

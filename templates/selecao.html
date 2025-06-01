@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block title %}Estruturas de Seleção - Fundamentos de Python{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <h1 class="section-title text-center mb-5">Estruturas de Seleção em Python</h1>
+            
+            <div class="bg-light-blue p-4 p-md-5 mb-5 shadow-sm rounded">
+                <p class="lead">
+                    Em Python, como em muitas outras linguagens de programação, as estruturas de seleção (ou estruturas condicionais) são cruciais 
+                    para controlar o fluxo de execução do código. Elas permitem que seu programa tome decisões com base 
+                    em certas condições, executando blocos de código específicos apenas se essas condições forem verdadeiras (ou falsas, conforme a lógica).
+                </p>
+                <p>As principais palavras-chave para estruturas de seleção em Python são: <code>if</code>, <code>elif</code> (else if), e <code>else</code>.</p>
+            </div>
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-arrow-right-square-fill me-2"></i>O Comando if</h2>
+                <p>
+                    A estrutura de seleção mais fundamental é o comando <code>if</code>. Ele avalia uma condição booleana (uma expressão que resulta em <code>True</code> ou <code>False</code>) 
+                    e, se a condição for verdadeira, o bloco de código indentado logo abaixo dele é executado.
+                </p>
+                <h5 class="mt-4">Sintaxe:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>if condicao:
+    # Bloco de código a ser executado se a condicao for True
+    # Este bloco DEVE ser indentado (geralmente 4 espaços)
+    print("A condição é verdadeira!")</code></pre>
+                
+                <h5 class="mt-4">Exemplo Prático:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>idade = 20
+if idade >= 18:
+    print("Você é maior de idade.")
+    print("Pode entrar na festa!")</code></pre>
+                <p class="mt-3">Neste exemplo, como a variável <code>idade</code> (20) é maior ou igual a 18, ambas as mensagens dentro do bloco <code>if</code> serão impressas.</p>
+            </article>
+
+            <hr class="my-4">
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-arrow-right-square-fill me-2"></i>O Comando else</h2>
+                <p>
+                    Muitas vezes, queremos que um bloco de código diferente seja executado caso a condição do <code>if</code> seja falsa. 
+                    Para isso, utilizamos o comando <code>else</code>, que é opcional e sempre vem após um bloco <code>if</code> (ou <code>elif</code>).
+                </p>
+                <h5 class="mt-4">Sintaxe:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>if condicao:
+    # Bloco de código se a condicao for True
+    print("Condição verdadeira.")
+else:
+    # Bloco de código se a condicao for False
+    print("Condição falsa.")</code></pre>
+
+                <h5 class="mt-4">Exemplo Prático:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>temperatura = 15
+if temperatura > 25:
+    print("Está calor! Vamos à praia.")
+else:
+    print("Não está tão calor. Melhor levar um casaco.")</code></pre>
+                <p class="mt-3">Aqui, como <code>temperatura</code> (15) não é maior que 25, o bloco de código dentro do <code>else</code> será executado.</p>
+            </article>
+            
+            <hr class="my-4">
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-arrow-right-square-fill me-2"></i>O Comando elif (Else If)</h2>
+                <p>
+                    Quando precisamos testar múltiplas condições em sequência, podemos usar o comando <code>elif</code> (uma contração de "else if"). 
+                    O Python avalia as condições do <code>elif</code> apenas se as condições anteriores (do <code>if</code> ou de outros <code>elif</code>s) 
+                    forem falsas. Você pode ter quantos blocos <code>elif</code> forem necessários. O bloco <code>else</code>, se presente, será executado se nenhuma das condições anteriores (<code>if</code> ou <code>elif</code>) for verdadeira.
+                </p>
+                <h5 class="mt-4">Sintaxe:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>if condicao1:
+    # Bloco de código se condicao1 for True
+    print("Condição 1 atendida.")
+elif condicao2:
+    # Bloco de código se condicao1 for False e condicao2 for True
+    print("Condição 2 atendida.")
+elif condicao3:
+    # Bloco de código se condicao1 e condicao2 forem False e condicao3 for True
+    print("Condição 3 atendida.")
+else:
+    # Bloco de código se NENHUMA das condições anteriores for True
+    print("Nenhuma das condições principais foi atendida.")</code></pre>
+
+                <h5 class="mt-4">Exemplo Prático:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>nota = 75
+if nota >= 90:
+    print("Conceito: A")
+elif nota >= 80:
+    print("Conceito: B")
+elif nota >= 70:
+    print("Conceito: C")
+elif nota >= 60:
+    print("Conceito: D")
+else:
+    print("Conceito: F (Reprovado)")</code></pre>
+                <p class="mt-3">Neste caso, "Conceito: C" será impresso, pois é a primeira condição (de cima para baixo, após as anteriores serem falsas) que se torna verdadeira.</p>
+            </article>
+
+            <hr class="my-4">
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-arrow-right-square-fill me-2"></i>Operadores de Comparação e Lógicos</h2>
+                <p>
+                    As condições nas estruturas de seleção são geralmente formadas usando operadores de comparação e operadores lógicos.
+                </p>
+                <h5 class="mt-4">Operadores de Comparação Comuns:</h5>
+                <ul class="list-group col-md-8 col-lg-6">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <code>==</code> <span class="badge bg-secondary">Igual a</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <code>!=</code> <span class="badge bg-secondary">Diferente de</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <code>&lt;</code> <span class="badge bg-secondary">Menor que</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <code>&gt;</code> <span class="badge bg-secondary">Maior que</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <code>&lt;=</code> <span class="badge bg-secondary">Menor ou igual a</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <code>&gt;=</code> <span class="badge bg-secondary">Maior ou igual a</span>
+                    </li>
+                </ul>
+
+                <h5 class="mt-4">Operadores Lógicos Comuns:</h5>
+                <ul class="list-group col-md-8 col-lg-6">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <code>and</code> <span class="badge bg-info text-dark">E lógico (ambas as condições devem ser verdadeiras)</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <code>or</code> <span class="badge bg-info text-dark">OU lógico (pelo menos uma condição deve ser verdadeira)</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <code>not</code> <span class="badge bg-info text-dark">NÃO lógico (inverte o valor booleano da condição)</span>
+                    </li>
+                </ul>
+
+                <h5 class="mt-4">Exemplo com Operadores Lógicos:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>idade = 22
+possui_carteira_motorista = True
+
+if idade >= 18 and possui_carteira_motorista:
+    print("Pode dirigir legalmente.")
+else:
+    print("Não pode dirigir legalmente.")
+
+tem_sol = False
+fim_de_semana = True
+
+if tem_sol or fim_de_semana:
+    print("Bom momento para um passeio!")</code></pre>
+            </article>
+            
+            <hr class="my-4">
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-arrow-right-square-fill me-2"></i>Estruturas if Aninhadas</h2>
+                <p>
+                    Você pode colocar uma estrutura <code>if</code>/<code>elif</code>/<code>else</code> dentro de outra. Isso é chamado de aninhamento. 
+                    Use com moderação, pois pode tornar o código mais difícil de ler se o aninhamento for muito profundo.
+                </p>
+                <h5 class="mt-4">Exemplo Prático:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>idade = 25
+nacionalidade = "Brasileira"
+
+if idade >= 18:
+    print("Maior de idade.")
+    if nacionalidade == "Brasileira":
+        print("Pode votar no Brasil.")
+    else:
+        print("Estrangeiro maior de idade.")
+else:
+    print("Menor de idade.")</code></pre>
+            </article>
+
+            <hr class="my-4">
+
+            <article class="mb-5">
+                <h2 class="mb-3" style="color: var(--primary-blue);"><i class="bi bi-arrow-right-square-fill me-2"></i>Expressão Condicional (Operador Ternário)</h2>
+                <p>
+                    Python oferece uma forma concisa de escrever um <code>if</code>/<code>else</code> simples em uma única linha, conhecida como expressão condicional ou operador ternário.
+                </p>
+                <h5 class="mt-4">Sintaxe:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>valor_se_verdadeiro if condicao else valor_se_falso</code></pre>
+                
+                <h5 class="mt-4">Exemplo Prático:</h5>
+                <pre class="bg-dark text-white p-3 rounded shadow-sm"><code>idade = 19
+status = "Maior de idade" if idade >= 18 else "Menor de idade"
+print(status)  # Saída: Maior de idade
+
+saldo = 500
+pode_sacar = 100
+mensagem_saque = "Saque autorizado" if saldo >= pode_sacar else "Saldo insuficiente"
+print(mensagem_saque) # Saída: Saque autorizado</code></pre>
+                <p class="mt-3">Isso é útil para atribuições simples baseadas em uma condição.</p>
+            </article>
+
+            <div class="alert alert-info mt-5 shadow-sm" role="alert">
+                <h4 class="alert-heading"><i class="bi bi-info-circle-fill"></i> Lembre-se da Indentação!</h4>
+                <p>A indentação (o recuo do código com espaços) é <strong>fundamental</strong> em Python. É ela que define os blocos de código que pertencem a cada comando <code>if</code>, <code>elif</code>, ou <code>else</code>. Erros de indentação são uma causa comum de problemas em Python.</p>
+                <hr>
+                <p class="mb-0">Use sempre um número consistente de espaços (a convenção é usar 4 espaços) para indentar seu código dentro de cada bloco.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
